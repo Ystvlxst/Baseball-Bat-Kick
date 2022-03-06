@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f7e38193b7f064d7380403618fd8b69e
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _CelStepTexture: {instanceID: 0}
+  - _CelCurveTexture: {instanceID: 0}
+  - _BaseMap: {instanceID: 0}
+  - _BumpMap: {instanceID: 0}
+  - _EmissionMap: {instanceID: 0}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
