@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private string _enemy_ = "Enemy";
     private string _ball = "Ball";
     private string _box = "Box";
+    private string _wall = "Wall";
 
     private void Start()
     {
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == _enemy_ || other.gameObject.tag == _ball || other.gameObject.tag == _box)
+        if (other.gameObject.tag == _enemy_ || other.gameObject.tag == _ball || other.gameObject.tag == _box || other.gameObject.tag == _wall)
             _hitEffect.Play();
     }
 
