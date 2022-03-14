@@ -8,14 +8,17 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemy;
+    [SerializeField] private Enemy[] _enemyes;
+    [SerializeField] private Vector3 _kickDirection;
     [SerializeField] private float _speed;
     [SerializeField] private Material[] _materials;
     [SerializeField] private GameObject _currentBody;
     [SerializeField] private GameObject _newBody;
     [SerializeField] private ParticleSystem _hitEffect;
 
-    private Renderer _rend;
+    private float _seeDistance = 10;
+    private float _forceKick = 30f;
+    private Renderer _renderer;
     private Rigidbody _rigidbody;
     private Animator _animator;
     private string _preHit = "preHit";
@@ -24,15 +27,14 @@ public class Player : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
-        _rend = GetComponent<Renderer>();
+        _renderer = GetComponent<Renderer>();
 
-        _rend.enabled = true;
-        _rend.sharedMaterial = _materials[0];
+        _renderer.enabled = true;
+        _renderer.sharedMaterial = _materials[0];
     }
 
     private void FixedUpdate()
     {
-        _enemy = GetComponent<Enemy>();
         Movement();
         Hit();
     }
@@ -64,28 +66,11 @@ public class Player : MonoBehaviour
             _animator.SetBool(_preHit, false);
         }
     }
-
-
+    
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy) || other.gameObject.TryGetComponent<Ball>(out Ball ball) || other.gameObject.TryGetComponent<Box>(out Box box) || other.gameObject.TryGetComponent<Wall>(out Wall wall))
             _hitEffect.Play();
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent<ChangeBody>(out ChangeBody changeBody))
-        {
-            changeBody._hooray.Play();
-            ChangeBody();
-        }
-    }
-
-    private void ChangeBody()
-    {
-        Vector3 panPosition = new Vector3(6.3f, 0.1f, -609f);
-        Instantiate(_newBody, panPosition, Quaternion.Euler(0, 0, 0));
-        gameObject.SetActive(false);
     }
 
     private IEnumerator SetEuler()
@@ -96,21 +81,29 @@ public class Player : MonoBehaviour
 
     private IEnumerator KickEnemy()
     {
-        float seeDistance = 10;
-        
-        if (Vector3.Distance(transform.position, _enemy.transform.position) <= seeDistance)
+        foreach (Enemy enemy in _enemyes)
         {
-            _enemy.HitSound.Play();
-            _enemy.EnemyRigidbody.AddForce(_enemy.KickDirection * _enemy.ForceKick);
-            _enemy.EnemyAnimator.SetBool(_enemy.OnHit, true);
-            _enemy.EnemyAnimator.SetBool(_enemy.IsKick, true);
-            yield return new WaitForSeconds(1.5f);
-            _enemy.gameObject.SetActive(false);
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= _seeDistance)
+            {
+                enemy.HitSound.Play();
+                enemy.EnemyRigidbody.AddForce(_kickDirection * _forceKick);
+                enemy.EnemyAnimator.SetBool(enemy.OnHit, true);
+                enemy.EnemyAnimator.SetBool(enemy.IsKick, true);
+                yield return new WaitForSeconds(1.5f);
+                enemy.gameObject.SetActive(false);
+            }
         }
     }
 
     public void ChangeMaterial()
     {
-        _rend.sharedMaterial = _materials[1];
+        _renderer.sharedMaterial = _materials[1];
+    }
+
+    public void ChangeBody()
+    {
+        Vector3 panPosition = new Vector3(6.3f, 0.1f, -609f);
+        Instantiate(_newBody, panPosition, Quaternion.Euler(0, 0, 0));
+        gameObject.SetActive(false);
     }
 }

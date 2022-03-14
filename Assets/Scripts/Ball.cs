@@ -7,7 +7,6 @@ public class Ball : MonoBehaviour
 {
     [SerializeField] private Vector3 _kick;
 
-    private Enemy _enemy;
     private Rigidbody _rigidbody;
     private float _forceKick = 10f;
 
@@ -16,7 +15,6 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _enemy = GetComponent<Enemy>();
     }
 
     private void OnCollisionEnter(Collision other)
