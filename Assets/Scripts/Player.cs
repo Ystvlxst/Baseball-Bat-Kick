@@ -16,19 +16,14 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem _hitEffect;
 
     private Renderer _rend;
-    private Rigidbody _rb;
+    private Rigidbody _rigidbody;
     private Animator _animator;
-
     private string _preHit = "preHit";
-    private string _enemy_ = "Enemy";
-    private string _ball = "Ball";
-    private string _box = "Box";
-    private string _wall = "Wall";
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        _rb = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
         _rend = GetComponent<Renderer>();
 
         _rend.enabled = true;
@@ -37,7 +32,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _enemy = GameObject.FindGameObjectWithTag(_enemy_).GetComponent<Enemy>();
+        _enemy = GetComponent<Enemy>();
         Movement();
         Hit();
     }
@@ -45,16 +40,16 @@ public class Player : MonoBehaviour
     private void Movement()
     {
         if (Input.GetKey(KeyCode.W))
-            _rb.AddForce(transform.forward * _speed, ForceMode.Impulse);
+            _rigidbody.AddForce(transform.forward * _speed, ForceMode.Impulse);
 
         if (Input.GetKey(KeyCode.S))
-            _rb.AddForce(-transform.forward * _speed, ForceMode.Impulse);
+            _rigidbody.AddForce(-transform.forward * _speed, ForceMode.Impulse);
 
         if (Input.GetKey(KeyCode.D))
-            _rb.AddForce(transform.right * _speed, ForceMode.Impulse);
+            _rigidbody.AddForce(transform.right * _speed, ForceMode.Impulse);
 
         if (Input.GetKey(KeyCode.A))
-            _rb.AddForce(-transform.right * _speed, ForceMode.Impulse);
+            _rigidbody.AddForce(-transform.right * _speed, ForceMode.Impulse);
     }
 
     private void Hit()
@@ -73,7 +68,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == _enemy_ || other.gameObject.tag == _ball || other.gameObject.tag == _box || other.gameObject.tag == _wall)
+        if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy) || other.gameObject.TryGetComponent<Ball>(out Ball ball) || other.gameObject.TryGetComponent<Box>(out Box box) || other.gameObject.TryGetComponent<Wall>(out Wall wall))
             _hitEffect.Play();
     }
 

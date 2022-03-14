@@ -7,10 +7,6 @@ public class WallDestroyer : MonoBehaviour
     [SerializeField] private GameObject _currentObject;
     [SerializeField] private GameObject[] _destroyedWall;
 
-    private string _player = "Player";
-    private string _ball = "Ball";
-    private string _enemy = "Enemy";
-
     private void Start()
     {
         _currentObject.SetActive(true);
@@ -21,7 +17,7 @@ public class WallDestroyer : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        if (col.collider.tag == _player || col.gameObject.tag == _ball || col.gameObject.tag == _enemy)
+        if (col.gameObject.TryGetComponent<Player>(out Player player) || col.gameObject.TryGetComponent<Ball>(out Ball ball) || col.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             foreach (GameObject newObject in _destroyedWall)
                 newObject.SetActive(true);

@@ -12,20 +12,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private Vector3 _kickDirection;
 
-    private Rigidbody _rb;
+    private Rigidbody _rigidbody;
     private Animator _animator;
     private AudioSource _hitSound;
 
     private float _forceKick = 30f;
 
-    private string _player = "Player";
     private string _onHit = "onHit";
     private string _isKick = "isKick";
 
     public Vector3 KickDirection => _kickDirection;
     public Animator EnemyAnimator => _animator;
     public AudioSource HitSound => _hitSound;
-    public Rigidbody EnemyRigidbody => _rb;
+    public Rigidbody EnemyRigidbody => _rigidbody;
     public float ForceKick => _forceKick;
     public string OnHit => _onHit;
     public string IsKick => _isKick;
@@ -33,13 +32,13 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _hitSound = GetComponent<AudioSource>();
-        _rb = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
-        _trigger = GameObject.FindGameObjectWithTag(_player).GetComponent<Player>();
+        _trigger = GetComponent<Player>();
         Movement();
     }
 
@@ -54,7 +53,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == _player)
+        if (other.gameObject.TryGetComponent<Player>(out Player player))
             _speed = 0;
     }
 }

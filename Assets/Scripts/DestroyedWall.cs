@@ -8,12 +8,12 @@ using UnityEngine;
 public class DestroyedWall : MonoBehaviour
 {
     private Animator _animator;
-    private Rigidbody _rb;
+    private Rigidbody _rigidbody;
     private string _isDestroy = "isDestroy";
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
     }
 
@@ -34,7 +34,7 @@ public class DestroyedWall : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(1f);
         
         _animator.SetBool(_isDestroy, true);
-        _rb.AddForce(Vector3.forward * forceKick, ForceMode.Impulse);
+        _rigidbody.AddForce(Vector3.forward * forceKick, ForceMode.Impulse);
         yield return waitForSeconds;
         gameObject.SetActive(false);
     }
