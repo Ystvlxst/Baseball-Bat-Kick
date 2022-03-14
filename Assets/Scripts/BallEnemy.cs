@@ -11,6 +11,6 @@ public class BallEnemy : MonoBehaviour
 
     public void ThrowBall()
     {
-        _ball.Rb.AddForce(_directionThrow * _forceThrow);
+        _ball.Rigidbody.AddForce(_directionThrow * _forceThrow);
     }
 }

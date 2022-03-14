@@ -11,7 +11,7 @@ public class Ball : MonoBehaviour
     private Rigidbody _rigidbody;
     private float _forceKick = 10f;
 
-    public Rigidbody Rb => _rigidbody;
+    public Rigidbody Rigidbody => _rigidbody;
 
     private void Start()
     {
