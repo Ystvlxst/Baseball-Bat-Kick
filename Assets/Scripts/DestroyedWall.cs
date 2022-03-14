@@ -17,7 +17,7 @@ public class DestroyedWall : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         AnimationPlay();
     }
@@ -30,10 +30,11 @@ public class DestroyedWall : MonoBehaviour
 
     private IEnumerator DestroyTime()
     {
+        float forceKick = 0.2f;
         WaitForSeconds waitForSeconds = new WaitForSeconds(1f);
-
-        yield return waitForSeconds;
+        
         _animator.SetBool(_isDestroy, true);
+        _rb.AddForce(Vector3.forward * forceKick, ForceMode.Impulse);
         yield return waitForSeconds;
         gameObject.SetActive(false);
     }

@@ -88,27 +88,28 @@ public class Player : MonoBehaviour
 
     private void ChangeBody()
     {
-        Vector3 panPosition = new Vector3(6.3f, 1f, -609f);
+        Vector3 panPosition = new Vector3(6.3f, 0.1f, -609f);
         Instantiate(_newBody, panPosition, Quaternion.Euler(0, 0, 0));
         gameObject.SetActive(false);
     }
 
     private IEnumerator SetEuler()
     {
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(1f);
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     private IEnumerator KickEnemy()
     {
         float seeDistance = 10;
+        
         if (Vector3.Distance(transform.position, _enemy.transform.position) <= seeDistance)
         {
-            _enemy.EnemyRigidbody.AddForce(_enemy.KickDirection * _enemy.ForceKick);
             _enemy.HitSound.Play();
+            _enemy.EnemyRigidbody.AddForce(_enemy.KickDirection * _enemy.ForceKick);
             _enemy.EnemyAnimator.SetBool(_enemy.OnHit, true);
             _enemy.EnemyAnimator.SetBool(_enemy.IsKick, true);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.5f);
             _enemy.gameObject.SetActive(false);
         }
     }
