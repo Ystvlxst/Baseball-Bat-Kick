@@ -6,7 +6,7 @@ public class ChangeBody : MonoBehaviour
 {
     [SerializeField] public ParticleSystem _hooray;
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent<Player>(out Player player))
         {

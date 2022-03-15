@@ -17,25 +17,25 @@ public class DestroyedWall : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void FixedUpdate()
-    {
-        AnimationPlay();
-    }
-
-    private void AnimationPlay()
-    {
-        if (gameObject != null)
-            StartCoroutine(DestroyTime());
-    }
-
     private IEnumerator DestroyTime()
     {
         float forceKick = 0.2f;
         WaitForSeconds waitForSeconds = new WaitForSeconds(1f);
-        
+
         _animator.SetBool(_isDestroy, true);
-        _rigidbody.AddForce(Vector3.forward * forceKick, ForceMode.Impulse);
+        _rigidbody.AddForce(Vector3.forward * forceKick * Time.deltaTime, ForceMode.Impulse);
         yield return waitForSeconds;
         gameObject.SetActive(false);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.TryGetComponent<Player>(out Player player))
+        {
+            if (gameObject != null)
+            {
+                StartCoroutine(DestroyTime());
+            }
+        }
     }
 }
