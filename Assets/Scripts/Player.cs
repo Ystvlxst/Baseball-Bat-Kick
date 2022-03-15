@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        _mMovement = GameObject.FindGameObjectWithTag("Joystick").GetComponent<MobileMovement>();
+        _mMovement = GetComponent<MobileMovement>();
         _controller = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
