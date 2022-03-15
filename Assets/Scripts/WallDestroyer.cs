@@ -17,7 +17,7 @@ public class WallDestroyer : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.TryGetComponent<Player>(out Player player) || col.gameObject.TryGetComponent<Ball>(out Ball ball) || col.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+        if (col.gameObject.TryGetComponent<DestroyerWall>(out DestroyerWall destroyerWall))
         {
             foreach (GameObject newObject in _destroyedWall)
                 newObject.SetActive(true);
