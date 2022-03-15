@@ -15,9 +15,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _currentBody;
     [SerializeField] private GameObject _newBody;
     [SerializeField] private ParticleSystem _hitEffect;
+    [SerializeField] private MobileMovement _mMovement;
 
     private CharacterController _controller;
-    private MobileMovement _mMovement;
     private float _seeDistance = 10;
     private Vector3 _moveVector;
     private Renderer _renderer;
@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        _mMovement = GetComponent<MobileMovement>();
         _controller = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
