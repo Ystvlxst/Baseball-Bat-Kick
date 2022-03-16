@@ -8,7 +8,7 @@ public class ChangeMaterial : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Player>(out Player player))
+        if (other.TryGetComponent(out Player player))
         {
             _hooray.Play();
             player.ChangeMaterial();

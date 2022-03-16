@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class WinText : MonoBehaviour
 {
+
     private void Start()
     {
         gameObject.SetActive(false);

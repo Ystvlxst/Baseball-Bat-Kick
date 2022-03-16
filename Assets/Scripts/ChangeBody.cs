@@ -8,7 +8,7 @@ public class ChangeBody : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Player>(out Player player))
+        if (other.gameObject.TryGetComponent(out Player player))
         {
             _hooray.Play();
             player.ChangeBody();

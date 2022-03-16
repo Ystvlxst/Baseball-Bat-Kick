@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private Player _trigger;
 
-    private Vector3 _kickDirection = new Vector3(0, 15, 50);
+    private Vector3 _kickDirection = new Vector3(0, 25, 65);
     private Rigidbody _rigidbody;
     private Animator _animator;
     private AudioSource _hitSound;
@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.TryGetComponent<Player>(out Player player))
+        if (other.gameObject.TryGetComponent(out Player player))
             _speed = 0;
     }
 

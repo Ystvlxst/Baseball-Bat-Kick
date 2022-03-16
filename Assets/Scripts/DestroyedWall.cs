@@ -30,12 +30,9 @@ public class DestroyedWall : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.TryGetComponent<Player>(out Player player))
+        if (other.gameObject.TryGetComponent(out Player player))
         {
-            if (gameObject != null)
-            {
-                StartCoroutine(DestroyTime());
-            }
+            StartCoroutine(DestroyTime());
         }
     }
 }
