@@ -5,14 +5,18 @@ using UnityEngine.Events;
 
 public class WinText : MonoBehaviour
 {
+    private bool _isFinished;
 
     private void Start()
     {
-        gameObject.SetActive(false);
+        _isFinished = false;
     }
 
-    public void PlayerFinished()
+    public void TryFinished(bool isFinished)
     {
-        gameObject.SetActive(true);
+        _isFinished = isFinished;
+
+        if (isFinished == true)
+            gameObject.SetActive(true);
     }
 }

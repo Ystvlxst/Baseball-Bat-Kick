@@ -12,7 +12,7 @@ public class Finish : MonoBehaviour
         if (other.TryGetComponent(out Player player))
         {
             _finish.Play();
-            _winText.PlayerFinished();
+            _winText.TryFinished(true);
         }
     }
 }

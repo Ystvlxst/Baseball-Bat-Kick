@@ -17,7 +17,7 @@ public class DestroyedWall : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private IEnumerator DestroyTime()
+    private IEnumerator DestroyedTime()
     {
         float forceKick = 0.2f;
         WaitForSeconds waitForSeconds = new WaitForSeconds(1f);
@@ -32,7 +32,7 @@ public class DestroyedWall : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            StartCoroutine(DestroyTime());
+            StartCoroutine(DestroyedTime());
         }
     }
 }

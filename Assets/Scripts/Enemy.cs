@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void PlayerKickMe()
+    public void KickedOfPlayer()
     {
         StartCoroutine(Kick());
     }

@@ -8,7 +8,7 @@ public class ThrowBallZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Player>(out Player player))
+        if (other.TryGetComponent(out Player player))
             _ballEnemy.ThrowBall();
     }
 }

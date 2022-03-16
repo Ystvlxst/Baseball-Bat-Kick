@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
 
         _renderer.enabled = true;
         _renderer.sharedMaterial = _materials[0];
+        _newBody.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -39,12 +40,12 @@ public class Player : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, enemy.transform.position) <= _seeDistance)
             {
-                enemy.PlayerKickMe();
+                enemy.KickedOfPlayer();
             }
         }
     }
 
-    private IEnumerator Hit()
+    private IEnumerator Hitting()
     {
         _animator.SetBool(_preHit, true);
         StartCoroutine(SetEuler());
@@ -59,9 +60,9 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
-    public void Hitting()
+    public void TryHitEnemy()
     {
-        StartCoroutine(Hit());
+        StartCoroutine(Hitting());
     }
 
     public void ChangeMaterial()
@@ -71,8 +72,7 @@ public class Player : MonoBehaviour
 
     public void ChangeBody()
     {
-        Vector3 panPosition = new Vector3(6.3f, 0.1f, -609f);
-        Instantiate(_newBody, panPosition, Quaternion.Euler(0, 0, 0));
-        gameObject.SetActive(false);
+        _currentBody.SetActive(false);
+        _newBody.SetActive(true);
     }
 }

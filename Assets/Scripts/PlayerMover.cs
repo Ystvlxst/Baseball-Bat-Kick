@@ -2,22 +2,26 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class PlayerMover : MonoBehaviour, IDragHandler
 {
-    [SerializeField] private Player[] _playerBodyes;
+    [SerializeField] private GameObject _containerPlayer;
+
+    private Player _player;
     private float _playerSpeed = 25f;
+
+    private void Start()
+    {
+        _player = GetComponent<Player>();
+    }
 
     private void Update()
     {
-        PlayerMoveForvard();
+        MoveForvard();
     }
 
-    private void PlayerMoveForvard()
+    private void MoveForvard()
     {
-        foreach (var currentPlayerBody in _playerBodyes)
-        {
-            Vector3 position = currentPlayerBody.transform.position;
-            position.z += _playerSpeed * Time.deltaTime;
-            currentPlayerBody.transform.position = position;
-        }
+        Vector3 position = _containerPlayer.transform.position;
+        position.z += _playerSpeed * Time.deltaTime;
+        _containerPlayer.transform.position = position;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -26,19 +30,16 @@ public class PlayerMover : MonoBehaviour, IDragHandler
         float deltaXfactor = 1.5f;
         Vector2 delta = eventData.delta;
 
-        foreach (var currentPlayerBody in _playerBodyes)
+        if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
         {
-            if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
-            {
-                Vector3 position = currentPlayerBody.transform.position;
-                position.x += deltaXfactor * delta.x * positionXfactor;
-                currentPlayerBody.transform.position = position;
-            }
-            else
-            {
-                if (delta.y < 0)
-                    currentPlayerBody.Hitting();
-            }
+            Vector3 position = _containerPlayer.transform.position;
+            position.x += deltaXfactor * delta.x * positionXfactor;
+            _containerPlayer.transform.position = position;
+        }
+        else
+        {
+            if (delta.y < 0)
+                _player.TryHitEnemy();
         }
     }
 }
